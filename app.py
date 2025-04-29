@@ -4,7 +4,7 @@ import os
 from model import predict_disease
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['UPLOAD_FOLDER'] = '/tmp/uploads'
 
 # Buat folder upload jika belum ada
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -26,4 +26,3 @@ def predict():
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port, debug=True)
-
