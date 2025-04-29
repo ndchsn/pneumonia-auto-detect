@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Deteksi Pneumonia Paru</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f2f2f2; padding: 30px; text-align: center; }
+        .box { background: white; padding: 30px; border-radius: 15px; max-width: 500px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        img { max-width: 100%; margin-top: 20px; border-radius: 10px; }
+        .result { margin-top: 20px; padding: 15px; border-radius: 10px; }
+        .normal { background: #d4edda; color: #155724; }
+        .pneumonia { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>🩻 Diagnosa X-Ray Paru Berbasis AI</h1>
+    <div class="box">
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required><br><br>
+            <input type="submit" value="🔍 Deteksi Sekarang">
+        </form>
+
+        {% if result %}
+            <div class="result {% if 'Normal' in result.label %}normal{% else %}pneumonia{% endif %}">
+                <h2>{{ result.label }}</h2>
+                <p><strong>Penjelasan:</strong> {{ result.penjelasan }}</p>
+                <p><strong>Saran Tindakan:</strong> {{ result.saran }}</p>
+            </div>
+            <img src="{{ image_path }}" alt="X-Ray Gambar">
+        {% endif %}
+    </div>
+</body>
+</html>
